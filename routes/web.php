@@ -31,8 +31,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 //ROOMS
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
 Route::get('/rooms/create', [RoomController::class, 'create'])->name('rooms.create');
@@ -56,6 +54,8 @@ Route::get('/timetables', [TimetableController::class, 'index'])->name('timetabl
 Route::get('/timetables/{room}', [TimetableController::class,'show'])->name('timetables.show');
 Route::get('/timetables/create', [TimetableController::class, 'create'])->name('timetables.create');
 Route::post('/timetables', [TimetableController::class,'store'])->name('timetables.store');
+
+Route::get('/timetables/{room}/pdf', [TimetableController::class, 'createPDF'])->name('timetables.createPDF');
 
 Route::any('/search',function(){
     $q = Room::get ( 'idsala' );

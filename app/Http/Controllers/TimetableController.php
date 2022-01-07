@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Timetable;
 use App\Models\Room;
+use \PDF;
 
 
 class TimetableController extends Controller
@@ -58,5 +59,23 @@ class TimetableController extends Controller
             ->with('success', 'Appointment created successfully.');
 
     }
+
+    // Generate PDF
+    public function createPDF(Room $room) {
+        // retreive all records from db
+        $data = Timetable::all();
+
+        // share data to view
+        //view()->share('timetables',$data);
+        //$pdf = PDF::loadView('pdf_view', $data);
+
+        // download PDF file with download method
+        //return $pdf->download('pdf_file.pdf');
+
+        $pdf = PDF::loadView('pdf.report');
+        return $pdf->stream('report.pdf', array('Attachment' => 0));
+
+
+      }
 
 }

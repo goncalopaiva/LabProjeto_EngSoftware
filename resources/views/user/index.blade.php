@@ -19,27 +19,38 @@
 
     <table class="table" syle="">
         <tr>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Tipo</th>
+            <th>Name</th>
+            <!--<th>Email</th>-->
+            <th>Type</th>
             <th>Ações</th>
         </tr>
         @foreach ($users as $user)
         <tr>
             <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
-            <td>{{ $user->type }}</td>
+            <!--<td>{{ $user->email }}</td>-->
+            <td>
+            @if ( $user->type == 1)
+                    Student
+                @endif
+                @if ( $user->type == 2)
+                    Teacher
+                @endif
+                @if ( $user->type == 3)
+                    Staff
+                @endif
+
+            </td>
             <td>
                 <form action="{{ route('users.destroy',$user->id) }}" method="POST">
 
                     <a class="btn btn-outline-dark" href="{{ route('users.show',$user->id) }}">👁 View</a>
 
-                    <a class="btn btn-outline-dark" href="{{ route('users.edit',$user->id) }}">✏️ Edit</a>
+                    <!--<a class="btn btn-outline-dark" href="{{ route('users.edit',$user->id) }}">✏️ Edit</a>
 
                     @csrf
                     @method('DELETE')
 
-                    <button type="submit" class="btn btn-outline-dark">❌ Delete</button>
+                    <button type="submit" class="btn btn-outline-dark">❌ Delete</button> -->
                 </form>
             </td>
         </tr>

@@ -5,6 +5,7 @@
 <div class="float-right mb-4">
     <a class="btn btn-outline-secondary" href="{{ route('rooms.index') }}">⬅️ Back to Classrooms</a>
     <a class="btn btn-outline-secondary" href="{{ route('timetables.create') }}">🆕 New Appointment</a>
+    <a class="btn btn-outline-secondary" href="{{ route('timetables.createPDF',$room->id)  }}">🖨 Print</a>
     <!--<a class="btn btn-outline-secondary" href="{{ route('rooms.create') }}">🆕 New Classroom</a>-->
 </div>
 
@@ -13,6 +14,8 @@
     <p>{{ $message }}</p>
 </div>
 @endif
+
+<br>
 
 <div class="mt-4">
 
