@@ -20,6 +20,21 @@ class RoomController extends Controller
         return view('room.index', compact('rooms'));
     }
 
+    public function search(Request $request){
+        // Get the search value from the request
+        $search = $request->input('search');
+
+        // Search in the title and body columns from the posts table
+        $rooms = Room::query()
+            ->where('idsala', 'LIKE', "%{$search}%")
+            //->orWhere('tipo', 'LIKE', "%{$search}%")
+            ->get();
+
+        // Return the search view with the resluts compacted
+        return view('room.search', compact('rooms'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *

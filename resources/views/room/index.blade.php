@@ -5,6 +5,7 @@
 <div class="float-right mb-4">
     <a class="btn btn-outline-secondary" href="{{ route('home') }}">🏠 Home</a>
     <a class="btn btn-outline-secondary" href="{{ route('rooms.create') }}">🆕 New Classroom</a>
+    <a class="btn btn-outline-secondary" href="{{ route('rooms.search') }}">🔎 Search</a>
 </div>
 
 @if ($message = Session::get('success'))

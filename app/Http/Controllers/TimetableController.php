@@ -37,7 +37,8 @@ class TimetableController extends Controller
      */
     public function create(Room $room)
     {
-        return view('timetable.create');
+        $timetables = Timetable::all();
+        return view('timetable.create', compact('timetables', 'room'));
     }
 
     /**
@@ -46,16 +47,16 @@ class TimetableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Room $room)
     {
         $request->validate([
-            'sala' => 'required',
+            'dia_semana' => 'required',
             'hora_inicio' => 'required',
         ]);
 
         Timetable::create($request->all());
 
-        return redirect()->route('timetable.index')
+        return redirect()->route('rooms.index')
             ->with('success', 'Appointment created successfully.');
 
     }

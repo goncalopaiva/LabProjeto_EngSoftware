@@ -39,6 +39,7 @@ Route::get('/rooms/{room}', [RoomController::class,'show'])->name('rooms.show');
 Route::get('/rooms/{room}/edit', [RoomController::class,'edit'])->name('rooms.edit');
 Route::put('/rooms/{room}', [RoomController::class,'update'])->name('rooms.update');
 Route::delete('/rooms/{room}', [RoomController::class,'destroy'])->name('rooms.destroy');
+Route::get('/search', [RoomController::class, 'search'])->name('rooms.search');
 
 //USERS
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -52,18 +53,14 @@ Route::delete('/users/{user}', [UserController::class,'destroy'])->name('users.d
 //TIMETABLES
 Route::get('/timetables', [TimetableController::class, 'index'])->name('timetables.index');
 Route::get('/timetables/{room}', [TimetableController::class,'show'])->name('timetables.show');
-Route::get('/timetables/create', [TimetableController::class, 'create'])->name('timetables.create');
+Route::get('/timetables/{room}/create', [TimetableController::class, 'create'])->name('timetables.create');
 Route::post('/timetables', [TimetableController::class,'store'])->name('timetables.store');
 
 Route::get('/timetables/{room}/pdf', [TimetableController::class, 'createPDF'])->name('timetables.createPDF');
 
-Route::any('/search',function(){
-    $q = Room::get ( 'idsala' );
-    $room = Room::where('idsala','LIKE','%'.$q.'%')->get();
-    if(count($room) > 0)
-        return view('timetable.show, $room->idsala')->withDetails($room)->withQuery ( $q );
-    else return view ('timetable.index')->withMessage('No Details found. Try to search again !');
-});
+
+
+
 
 
 
