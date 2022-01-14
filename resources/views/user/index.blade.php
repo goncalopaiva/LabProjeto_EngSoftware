@@ -2,10 +2,6 @@
 
 @section('content')
 
-<div class="float-right mb-4">
-    <a class="btn btn-outline-secondary" href="{{ route('home') }}">🏠 Home</a>
-    <a class="btn btn-outline-secondary" href="{{ route('users.create') }}">🆕 New User</a>
-</div>
 
 @if ($message = Session::get('success'))
 <div class="alert alert-success">
@@ -13,52 +9,82 @@
 </div>
 @endif
 
-<br>
+<br><br>
 
 <div class="mx-auto">
-
+    <h4>Students</h4>
     <table class="table" syle="">
         <tr>
             <th>Name</th>
-            <!--<th>Email</th>-->
-            <th>Type</th>
-            <th>Ações</th>
+            <th>Email</th>
+            <th>Actions</th>
         </tr>
         @foreach ($users as $user)
-        <tr>
-            <td>{{ $user->name }}</td>
-            <!--<td>{{ $user->email }}</td>-->
-            <td>
-            @if ( $user->type == 1)
-                    Student
-                @endif
-                @if ( $user->type == 2)
-                    Teacher
-                @endif
-                @if ( $user->type == 3)
-                    Staff
-                @endif
-
-            </td>
-            <td>
-                <form action="{{ route('users.destroy',$user->id) }}" method="POST">
-
-                    <a class="btn btn-outline-dark" href="{{ route('users.show',$user->id) }}">👁 View</a>
-
-                    <!--<a class="btn btn-outline-dark" href="{{ route('users.edit',$user->id) }}">✏️ Edit</a>
-
-                    @csrf
-                    @method('DELETE')
-
-                    <button type="submit" class="btn btn-outline-dark">❌ Delete</button> -->
-                </form>
-            </td>
-        </tr>
+            @if ($user->type == 1)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>
+                        <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+                            <a class="btn btn-outline-dark" href="{{ route('users.show',$user->id) }}">👁 View</a>
+                        </form>
+                    </td>
+                </tr>
+            @endif
         @endforeach
     </table>
-
 </div>
 
+<br><br>
 
+<div class="mx-auto">
+    <h4>Teachers</h4>
+    <table class="table" syle="">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        @foreach ($users as $user)
+            @if ($user->type == 2)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>
+                        <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+                            <a class="btn btn-outline-dark" href="{{ route('users.show',$user->id) }}">👁 View</a>
+                        </form>
+                    </td>
+                </tr>
+            @endif
+        @endforeach
+    </table>
+</div>
+
+<br><br>
+
+<div class="mx-auto">
+    <h4>Staff</h4>
+    <table class="table" syle="">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        @foreach ($users as $user)
+            @if ($user->type == 3)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>
+                        <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+                            <a class="btn btn-outline-dark" href="{{ route('users.show',$user->id) }}">👁 View</a>
+                        </form>
+                    </td>
+                </tr>
+            @endif
+        @endforeach
+    </table>
+</div>
 
 @endsection

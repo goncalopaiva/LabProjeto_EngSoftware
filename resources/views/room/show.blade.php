@@ -18,7 +18,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Tipo:</strong>
-            @if ( $room->tipo == 1)
+                @if ( $room->tipo == 1)
                     Sala
                 @endif
                 @if ( $room->tipo == 2)

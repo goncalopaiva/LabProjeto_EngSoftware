@@ -2,9 +2,15 @@
 
 @section('timetable')
 
+@if ($message = Session::get('success'))
+<div class="alert alert-success">
+    <p>{{ $message }}</p>
+</div>
+@endif
+
 <a>Room: {{$room->idsala}} </a> <br><br>
 
-<table class="table" style="font-size:12px">
+<table class="table table-borderless" style="font-size:12px">
 
 <tr>
     <th>Time</th>
@@ -17,15 +23,13 @@
 
 @for ($i=8; $i <= 20; $i++)
     <tr>
-        <td> {{$i}}:00</td>
+    <td> {{$i}}:00</td>
     @for ($j=1; $j <= 5; $j++)
-        <td>
-            @foreach($timetables as $timetable)
-                @if ($timetable->dia_semana == $j && $timetable->hora_inicio == $i && $timetable->sala == $room->idsala)
-                    A
-                @endif
-            @endforeach
-        </td>
+        @foreach($timetables as $timetable)
+            @if ($timetable->dia_semana == $j && $timetable->hora_inicio == $i && $timetable->sala == $room->idsala)
+                <td style="background-color:#C6D8FF"></td>
+            @endif
+        @endforeach
     @endfor
     </tr>
 @endfor

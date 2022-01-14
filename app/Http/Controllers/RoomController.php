@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Room;
+use DB;
 
 class RoomController extends Controller
 {
@@ -16,19 +17,36 @@ class RoomController extends Controller
     public function index()
     {
 
-        $rooms = Room::all();
+        //$rooms = Room::all();
+
+        $rooms = DB::table('rooms')
+            ->orderBy('idsala', 'asc')
+            ->get();
+
         return view('room.index', compact('rooms'));
     }
 
     public function search(Request $request){
         // Get the search value from the request
-        $search = $request->input('search');
 
-        // Search in the title and body columns from the posts table
-        $rooms = Room::query()
+        $search = $request->get('search');
+        $tipo = $request->get('tipo');
+
+        if ($tipo == '0') {
+            $rooms = Room::query()->where('idsala', 'LIKE', "%{$search}%")->orderBy('idsala', 'asc')->get();
+        }
+        else if ($search == '') {
+            $rooms = Room::query()->where('tipo', 'LIKE', "%{$tipo}%")->orderBy('idsala', 'asc')->get();
+        }
+
+        else {
+            $rooms = Room::query()
             ->where('idsala', 'LIKE', "%{$search}%")
-            //->orWhere('tipo', 'LIKE', "%{$search}%")
+            ->Where('tipo', 'LIKE', "%{$tipo}%")
+            ->orderBy('idsala', 'asc')
             ->get();
+        }
+
 
         // Return the search view with the resluts compacted
         return view('room.search', compact('rooms'));
@@ -60,7 +78,7 @@ class RoomController extends Controller
 
         Room::create($request->all());
 
-        return redirect()->route('room.index')
+        return redirect()->route('rooms.index')
             ->with('success', 'Room created successfully.');
 
     }

@@ -33,7 +33,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <a>Tipo</a>
-                <input type="text" name="city" value="{{ $room->tipo }}" class="form-control" placeholder="Tipo">
+                <select class="form-control" value="{{ $room->tipo }}" id="tipo" name="tipo">
+                    <option value="1">Sala</option>
+                    <option value="2">Laboratório</option>
+                    <option value="3">Auditório</option>
+                </select>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

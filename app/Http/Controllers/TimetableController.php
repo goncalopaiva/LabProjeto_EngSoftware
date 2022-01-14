@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 use App\Models\Timetable;
 use App\Models\Room;
@@ -54,29 +55,18 @@ class TimetableController extends Controller
             'hora_inicio' => 'required',
         ]);
 
-        Timetable::create($request->all());
-
-        return redirect()->route('rooms.index')
-            ->with('success', 'Appointment created successfully.');
-
+        if (Timetable::where([
+            ['sala', '=', $request->sala],
+            ['dia_semana', '=', $request->dia_semana],
+            ['hora_inicio','=',$request->hora_inicio]
+        ])->exists() ) {
+            return redirect()->route('rooms.index')->with('unsuccess', 'Appointment cannot be created. Room is already been used at that time');
+        }
+        else {
+            Timetable::create($request->all());
+            return redirect()->route('rooms.index')
+                ->with('success', 'Appointment created successfully.');
+        }
     }
-
-    // Generate PDF
-    public function createPDF(Room $room) {
-        // retreive all records from db
-        $data = Timetable::all();
-
-        // share data to view
-        //view()->share('timetables',$data);
-        //$pdf = PDF::loadView('pdf_view', $data);
-
-        // download PDF file with download method
-        //return $pdf->download('pdf_file.pdf');
-
-        $pdf = PDF::loadView('pdf.report');
-        return $pdf->stream('report.pdf', array('Attachment' => 0));
-
-
-      }
 
 }

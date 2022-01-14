@@ -3,8 +3,9 @@
 @section('content')
 
 <div class="float-right mb-4">
-    <a class="btn btn-outline-secondary" href="{{ route('home') }}">🏠 Home</a>
-    <a class="btn btn-outline-secondary" href="{{ route('rooms.create') }}">🆕 New Classroom</a>
+    @if (Auth::user()->type == '3')
+        <a class="btn btn-outline-secondary" href="{{ route('rooms.create') }}">🆕 New Classroom</a>
+    @endif
     <a class="btn btn-outline-secondary" href="{{ route('rooms.search') }}">🔎 Search</a>
 </div>
 
@@ -14,11 +15,17 @@
 </div>
 @endif
 
+@if ($message = Session::get('unsuccess'))
+<div class="alert alert-danger">
+    <p>{{ $message }}</p>
+</div>
+@endif
+
 <br>
 
 <div class="mx-auto">
 
-    <table class="table" syle="width: 30%">
+    <table class="table">
         <tr>
             <th>Sala</th>
             <th>Tipo</th>
@@ -43,14 +50,14 @@
 
                     <a class="btn btn-outline-dark" href="{{ route('rooms.show',$room->id) }}">👁 View</a>
 
-                    <a class="btn btn-outline-dark" href="{{ route('timetables.show',$room->id) }}">👁 Timetable</a>
+                    <a class="btn btn-outline-dark" href="{{ route('timetables.show',$room->id) }}">📅 Timetable</a>
 
-                    <a class="btn btn-outline-dark" href="{{ route('rooms.edit',$room->id) }}">✏️ Edit</a>
-
-                    @csrf
-                    @method('DELETE')
-
-                    <button type="submit" class="btn btn-outline-dark">❌ Delete</button>
+                    @if (Auth::user()->type == '3')
+                        <a class="btn btn-outline-dark" href="{{ route('rooms.edit',$room->id) }}">✏️ Edit</a>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-dark">❌ Delete</button>
+                    @endif
                 </form>
             </td>
         </tr>

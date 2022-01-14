@@ -36,8 +36,40 @@
         </button>
 
         <a class="navbar-brand" href="#">
-            <img src="https://www.ufp.pt/app/uploads/2019/02/logoufp-300x120.png" width="auto" height="30" alt="">
+                <img src="https://www.ufp.pt/app/uploads/2019/02/logoufp-300x120.png" width="auto" height="30" alt="">
         </a>
+
+        @guest
+        @else
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+
+                    @if (Auth::user()->type == '1')
+                        <a class="nav-link" href="{{route('home')}}">Home</a>
+                    @endif
+                    @if (Auth::user()->type == '2')
+                        <a class="nav-link" href="{{route('teacher.home')}}">Home</a>
+                    @endif
+                    @if (Auth::user()->type == '3')
+                        <a class="nav-link" href="{{route('staff.home')}}">Home</a>
+                    @endif
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/rooms">Classrooms</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        @if (Auth::user()->type == '2' || Auth::user()->type == '3')
+                            <a class="nav-link" href="/users">Users</a>
+                        @endif
+                    </li>
+
+                </ul>
+            </div>
+
+        @endguest
 
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
@@ -56,7 +88,17 @@
 
                 @else
                     <li class="nav-item">
-                        <a class="nav-link">Hello, {{ Auth::user()->name }}</a>
+                        @if (Auth::user()->type == '1')
+                            <a class="nav-link">Hello, {{ Auth::user()->name }} (Student)</a>
+                        @endif
+
+                        @if (Auth::user()->type == '2')
+                            <a class="nav-link">Hello, {{ Auth::user()->name }} (Teacher)</a>
+                        @endif
+
+                        @if (Auth::user()->type == '3')
+                            <a class="nav-link">Hello, {{ Auth::user()->name }} (Staff)</a>
+                        @endif
                     </li>
 
                     <a class="nav-item nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -73,10 +115,6 @@
 
 
     </nav>
-
-
-
-
 
 
         <main class="container py-4">

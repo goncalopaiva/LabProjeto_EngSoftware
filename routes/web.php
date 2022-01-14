@@ -11,9 +11,12 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TimetableController;
+use App\Http\Controllers\EmailController;
 
 use App\Models\Input;
 use App\Models\Room;
+use App\Models\User;
+use App\Models\Timetable;
 
 
 /*
@@ -56,14 +59,8 @@ Route::get('/timetables/{room}', [TimetableController::class,'show'])->name('tim
 Route::get('/timetables/{room}/create', [TimetableController::class, 'create'])->name('timetables.create');
 Route::post('/timetables', [TimetableController::class,'store'])->name('timetables.store');
 
-Route::get('/timetables/{room}/pdf', [TimetableController::class, 'createPDF'])->name('timetables.createPDF');
-
-
-
-
-
-
-
+//PDF
+Route::get('generate-pdf/{room}', [PDFController::class, 'generatePDF'])->name('timetables.createPDF');
 
 
 
@@ -73,17 +70,10 @@ Route::get('/timetables/{room}/pdf', [TimetableController::class, 'createPDF'])-
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+Route::get('staff/home', [HomeController::class, 'staffHome'])->name('staff.home')->middleware('is_staff');
+Route::get('teacher/home', [HomeController::class, 'teacherHome'])->name('teacher.home')->middleware('is_teacher');
 
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
