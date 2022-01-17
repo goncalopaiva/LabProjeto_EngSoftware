@@ -18,6 +18,8 @@ class CreateTimetableTable extends Migration
             $table->integer('sala');
             $table->integer('dia_semana');
             $table->integer('hora_inicio');
+            $table->integer('hora_fim');
+            $table->integer('user');
             $table->timestamps();
         });
     }

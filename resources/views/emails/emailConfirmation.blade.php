@@ -3,24 +3,49 @@
 <html>
 
 <head>
-    <title>Reservation for room</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Reservation for room {{ $event->sala }}</title>
 </head>
-
 
 <body class="bg-light">
   <div class="container">
-    <img class="ax-center my-10 w-24" src="https://www.ufp.pt/app/uploads/2019/02/logoufp-300x120.png" />
-    <div class="card p-6 p-lg-10 space-y-4">
-      <p>
-          Room reservation for room {{$request->dia_semana}} at {{$request->hora_inicio}}:00 is confirmed.
-      </p>
-      <br>
-      <p>
-          Thank you!
-     </p>
+    <img class="logo" src="https://www.ufp.pt/app/uploads/2019/02/logoufp-300x120.png" />
+    <div class="container">
+
+        <br>
+
+        Hello, {{ Auth::user()->name }}.
+
+        <br>
+
+        The reservation made for
+
+        @if ($event->dia_semana == 1)
+            segunda-feira
+        @endif
+
+        @if ($event->dia_semana == 2)
+            terça-feira
+        @endif
+
+        @if ($event->dia_semana == 3)
+            quarta-feira
+        @endif
+
+        @if ($event->dia_semana == 4)
+            quinta-feira
+        @endif
+
+        @if ($event->dia_semana == 5)
+            sexta-feira
+        @endif
+
+        at {{ $event->hora_inicio }} for room {{ $event->sala }} was confirmed.
+
+        <br>
+
+        Thank you!
+
     </div>
-    <img class="ax-center mt-10 w-40" src="https://assets.bootstrapemail.com/logos/light/text.png" />
   </div>
 </body>
 

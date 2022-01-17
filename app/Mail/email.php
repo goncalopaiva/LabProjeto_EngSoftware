@@ -7,7 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class email extends Mailable
+use Illuminate\Support\Facades\DB;
+use App\Models\Timetable;
+
+class Email extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,7 +31,8 @@ class email extends Mailable
      */
     public function build()
     {
-        return $this->subject('Reservation')
-                    ->view('emails.emailConfirmation');
+
+        $event = DB::table('timetables')->get()->sortByDesc('created_at')->first();
+        return $this->view('emails.emailConfirmation', compact('event'));
     }
 }

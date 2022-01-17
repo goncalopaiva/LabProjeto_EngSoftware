@@ -11,7 +11,8 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TimetableController;
-use App\Http\Controllers\EmailController;
+use App\Mail\Email;
+use App\Http\Controllers\StripeController;
 
 use App\Models\Input;
 use App\Models\Room;
@@ -62,6 +63,19 @@ Route::post('/timetables', [TimetableController::class,'store'])->name('timetabl
 //PDF
 Route::get('generate-pdf/{room}', [PDFController::class, 'generatePDF'])->name('timetables.createPDF');
 
+//STRIPE
+Route::get('/stripe-payment', [StripeController::class, 'handleGet']);
+Route::post('/stripe-payment', [StripeController::class, 'handlePost'])->name('stripe.payment');
+
+//EMAIL
+Route::get('/email', function () {
+
+    Mail::to(Auth::user()->email)->send(new Email);
+
+    return redirect()->route('rooms.index')
+    ->with('success', 'Appointment created successfully.');
+
+})->name('email');
 
 
 /*AUTH*/
